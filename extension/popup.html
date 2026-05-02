@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KAWACH Status</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="header">
+    <h1>KAWACH</h1>
+    <p>Browser Shield</p>
+  </div>
+  
+  <div class="content">
+    <div id="loading" class="hidden">Scanning current page...</div>
+    
+    <div id="result" class="hidden">
+      <h2 id="status-text">Safe</h2>
+      <div class="score-container">
+        Risk Score: <span id="risk-score">0</span>/100
+      </div>
+      <ul id="reasons-list"></ul>
+    </div>
+    
+    <div id="error" class="hidden error-text"></div>
+  </div>
+
+  <button id="scan-btn">Force Manual Scan</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

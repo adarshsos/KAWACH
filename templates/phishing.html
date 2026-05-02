@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Phishing Detection</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h2>🌐 Phishing Detection</h2>
+
+<input id="url" placeholder="Enter URL">
+<button onclick="checkPhishing()">Check</button>
+
+<p id="result"></p>
+
+<script>
+function checkPhishing(){
+    fetch('/phishing',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({url:document.getElementById('url').value})
+    }).then(res=>res.json()).then(data=>{
+        document.getElementById('result').innerText = data.result;
+    });
+}
+</script>
+
+<br><br>
+<a href="/">⬅ Back</a>
+
+</body>
+</html>

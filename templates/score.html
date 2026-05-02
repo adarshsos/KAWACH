@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cyber Score</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h2>📊 Cyber Health Score</h2>
+
+<!-- Password -->
+<input id="pass" placeholder="Enter Password">
+<button onclick="checkStrength()">Check Strength</button>
+<p id="strengthResult"></p>
+
+<!-- URL -->
+<input id="url" placeholder="Enter URL">
+<button onclick="checkPhishing()">Check URL</button>
+<p id="phishResult"></p>
+
+<!-- Score -->
+<button onclick="getScore()">Generate Score</button>
+<p id="score"></p>
+
+<script>
+let strength = 0;
+let phishing = "Safe ✅";
+
+function checkStrength(){
+    fetch('/strength',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({password:document.getElementById('pass').value})
+    }).then(res=>res.json()).then(data=>{
+        strength = data.score;
+        document.getElementById('strengthResult').innerText = "Strength Score: "+data.score;
+    });
+}
+
+function checkPhishing(){
+    fetch('/phishing',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({url:document.getElementById('url').value})
+    }).then(res=>res.json()).then(data=>{
+        phishing = data.result;
+        document.getElementById('phishResult').innerText = data.result;
+    });
+}
+
+function getScore(){
+    fetch('/score',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            strength: strength,
+            phishing: phishing
+        })
+    }).then(res=>res.json()).then(data=>{
+        document.getElementById('score').innerText = "Cyber Score: "+data.score;
+    });
+}
+</script>
+
+<br><br>
+<a href="/">⬅ Back</a>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Password Strength</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h2>🔑 Password Strength Checker</h2>
+
+<input id="checkPass" placeholder="Enter Password">
+<button onclick="checkStrength()">Check</button>
+
+<p id="result"></p>
+
+<script>
+function checkStrength(){
+    fetch('/strength',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({password:document.getElementById('checkPass').value})
+    }).then(res=>res.json()).then(data=>{
+        document.getElementById('result').innerText = "Score: "+data.score;
+    });
+}
+</script>
+
+<br><br>
+<a href="/">⬅ Back</a>
+
+</body>
+</html>

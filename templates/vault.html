@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Password Vault</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h2>🔐 Password Vault</h2>
+
+<input id="site" placeholder="Website">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="save()">Save</button>
+
+<script>
+function save() {
+    fetch('/save', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            website: document.getElementById('site').value,
+            password: document.getElementById('pass').value
+        })
+    }).then(res=>res.json()).then(data=>alert("Saved!"));
+}
+</script>
+
+<br><br>
+<a href="/">⬅ Back</a>
+
+</body>
+</html>
