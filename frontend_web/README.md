@@ -1,16 +1,77 @@
-# React + Vite
+# KAWACH Frontend (Vite + React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This frontend calls the KAWACH Flask backend APIs.
 
-Currently, two official plugins are available:
+## Local Run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Install dependencies:
 
-## React Compiler
+```bash
+npm install
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+2. Copy the environment template and set your backend URL:
 
-## Expanding the ESLint configuration
+```bash
+cp .env.example .env
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+`VITE_API_BASE_URL` should point to your backend, for example:
+
+```env
+VITE_API_BASE_URL=http://127.0.0.1:5000
+```
+
+3. Start dev server:
+
+```bash
+npm run dev
+```
+
+## Production Build
+
+```bash
+npm run build
+```
+
+Build output is generated in `dist/`.
+
+## Deploy (Recommended: Vercel for frontend + Render for backend)
+
+### 1) Deploy Backend (Render)
+
+1. Create a new **Web Service** from your repo.
+2. Set root directory to `backend`.
+3. Build command:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Start command:
+
+```bash
+gunicorn app:app
+```
+
+5. After deploy, copy backend URL, for example:
+
+```text
+https://kawach-backend.onrender.com
+```
+
+### 2) Deploy Frontend (Vercel)
+
+1. Import your repo in Vercel.
+2. Set project root directory to `frontend_web`.
+3. Add environment variable:
+
+```env
+VITE_API_BASE_URL=https://kawach-backend.onrender.com
+```
+
+4. Deploy.
+
+## Alternate Static Deploy (Netlify/GitHub Pages)
+
+You can deploy `dist/` to any static host. Just make sure `VITE_API_BASE_URL` points to your live backend before building.
