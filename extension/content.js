@@ -164,8 +164,13 @@ document.addEventListener('focusin', (e) => {
         action: "savePassword", 
         data: { website, username, password } 
       }, (response) => {
-        saveBtn.innerHTML = "✅ Saved to Vault!";
-        saveBtn.style.background = "#10b981";
+        if (response && response.status === "Success") {
+          saveBtn.innerHTML = "✅ Saved to Vault!";
+          saveBtn.style.background = "#10b981";
+        } else {
+          saveBtn.innerHTML = "❌ Failed to save!";
+          saveBtn.style.background = "#ef4444";
+        }
         setTimeout(() => {
           container.remove();
           window.removeEventListener('scroll', updatePosition);
