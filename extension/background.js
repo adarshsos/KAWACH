@@ -1,9 +1,7 @@
 // Background service worker to make API calls to our Python backend
-const BASE_URL = "https://kawach-ey6v.onrender.com"; // 👈 yaha apna Render/Railway URL daalo
-
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "checkPhishing") {
-    fetch(`${BASE_URL}/api/phishing/check`, {
+    fetch('https://kawach-ey6v.onrender.com/api/phishing/check', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -11,10 +9,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       body: JSON.stringify({ url: request.url })
     })
     .then(response => response.json())
-    .then(data => {
-      console.log("Phishing API Response:", data); // 👈 debug
-      sendResponse(data);
-    })
+    .then(data => sendResponse(data))
     .catch(error => {
       console.error('Error checking URL:', error);
       sendResponse({ risk_score: 0, status: "Error connecting to KAWACH Backend" });
@@ -24,7 +19,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
   
   if (request.action === "savePassword") {
-    fetch(`${BASE_URL}/api/vault`, {
+    fetch('https://kawach-ey6v.onrender.com/api/vault', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -32,10 +27,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       body: JSON.stringify(request.data)
     })
     .then(response => response.json())
-    .then(data => {
-      console.log("Vault API Response:", data); // 👈 debug
-      sendResponse(data);
-    })
+    .then(data => sendResponse(data))
     .catch(error => {
       console.error('Error saving password:', error);
       sendResponse({ status: "Error" });
@@ -44,3 +36,4 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 });
+
