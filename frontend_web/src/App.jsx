@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Shield, Smartphone, Wifi, Key, AlertTriangle, Link as LinkIcon, Database, CheckCircle, Eye, EyeOff, Globe, Download, Activity, Search } from 'lucide-react';
 import './App.css';
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:5000').replace(/\/$/, '');
+const apiUrl = (path) => `${API_BASE_URL}${path}`;
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showDocs, setShowDocs] = useState(false);
@@ -35,7 +37,7 @@ function App() {
   const fetchScore = async () => {
     setLoadingScore(true);
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/scan/score', {
+      const response = await axios.post(apiUrl('/api/scan/score'), {
         breached_accounts: 0,
         weak_passwords: 0
       });
@@ -48,7 +50,7 @@ function App() {
 
   const checkPhishing = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/phishing/check', { url });
+      const response = await axios.post(apiUrl('/api/phishing/check'), { url });
       setPhishResult(response.data);
     } catch (e) {
       console.error(e);
@@ -57,7 +59,7 @@ function App() {
 
   const checkBreach = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:5000/api/breach/email', { email: breachEmail });
+      const response = await axios.post(apiUrl('/api/breach/email'), { email: breachEmail });
       setBreachResult(response.data);
     } catch (e) {
       console.error(e);
@@ -69,7 +71,7 @@ function App() {
       setOsintResult({loading: true});
       // Send the raw input to backend so the new intelligent routing can detect Email vs Phone vs Username
       const cleanInput = osintInput.trim();
-      const response = await axios.post('http://127.0.0.1:5000/api/osint/scan', { username: cleanInput });
+      const response = await axios.post(apiUrl('/api/osint/scan'), { username: cleanInput });
       setOsintResult(response.data);
     } catch (e) {
       console.error(e);
@@ -79,7 +81,7 @@ function App() {
 
   const fetchVault = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:5000/api/vault');
+      const response = await axios.get(apiUrl('/api/vault'));
       setVaultData(response.data.vault);
     } catch (e) {
       console.error(e);
@@ -88,7 +90,7 @@ function App() {
 
   const saveToVault = async () => {
     try {
-      await axios.post('http://127.0.0.1:5000/api/vault', newVault);
+      await axios.post(apiUrl('/api/vault'), newVault);
       setNewVault({ website: '', username: '', password: '' });
       fetchVault();
     } catch (e) {
