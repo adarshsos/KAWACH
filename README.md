@@ -140,8 +140,8 @@ python app.py
 ```
 
 ### 4. Access the Application
-- **Frontend**: http://localhost:5173/
-- **Backend API**: http://localhost:5000/api/health
+- **Frontend (production)**: https://kawach-sandy.vercel.app/
+- **Backend API (production)**: https://kawach-ey6v.onrender.com/api/health
 
 ---
 
@@ -210,7 +210,7 @@ https://kawach-sandy.vercel.app
 npm run build
 
 # Environment Variables
-VITE_API_BASE_URL=https://kawach-backend.onrender.com
+VITE_API_BASE_URL=https://kawach-ey6v.onrender.com
 ```
 
 ### Backend (Render)
