@@ -3,24 +3,28 @@
   "name": "KAWACH: Phishing & Safe Web Evaluation",
   "version": "1.0",
   "description": "Real-time phishing detection and unsafe website evaluation based on OWASP standards.",
+
   "permissions": [
     "activeTab",
     "scripting",
     "tabs"
   ],
+
   "host_permissions": [
-    "http://127.0.0.1:5000/*",
-    "<all_urls>"
+    "https://kawach-ey6v.onrender.com"
   ],
+
   "background": {
     "service_worker": "background.js"
   },
+
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
   ],
+
   "action": {
     "default_popup": "popup.html",
     "default_title": "KAWACH Security"
