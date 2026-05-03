@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: kawach-backend
+    env: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    autoDeploy: true
+    healthCheckPath: /api/health
